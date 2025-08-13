@@ -1,0 +1,17 @@
+*{box-sizing:border-box;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+body{margin:0;background:#0b0f14;color:#eaf1ff}
+.app{max-width:900px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;justify-content:space-between}
+h1{margin:0;font-size:22px}
+.status{font-size:12px;opacity:.8}
+.controls{background:#121826;padding:12px;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.4)}
+.grid{display:grid;grid-template-columns:100px 1fr 60px 120px 50px 120px;gap:8px;align-items:center}
+.buttons{display:flex;gap:8px;margin-top:8px}
+button{padding:10px 14px;border-radius:12px;border:none;cursor:pointer;background:#2a68ff;color:white}
+button[disabled]{opacity:.5;cursor:not-allowed}
+.transcript{margin-top:16px;background:#121826;border-radius:16px;padding:12px}
+#log{height:320px;overflow:auto;background:#0f1522;border-radius:12px;padding:10px}
+.entry{margin:6px 0}
+.me{color:#81f7a7}
+.ai{color:#9ebaff}
+.tag{display:inline-block;font-size:11px;padding:2px 6px;border-radius:999px;background:#2a2f43;margin-right:6px}

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rev Voice (Gemini Live)</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Talk to Rev</h1>
+      <div class="status"><span id="wsStatus">disconnected</span></div>
+    </header>
+
+    <main>
+      <section class="controls">
+        <div class="grid">
+          <label>Server WS</label>
+          <input id="serverUrl" value="ws://localhost:8080/live" />
+          <label>Voice</label>
+          <input id="voice" value="charon" />
+          <label>Lang</label>
+          <input id="lang" value="en-US" />
+        </div>
+        <div class="buttons">
+          <button id="connect">Connect</button>
+          <button id="disconnect" disabled>Disconnect</button>
+          <button id="interrupt" disabled>Interrupt</button>
+        </div>
+        <div class="buttons">
+          <button id="holdToTalk" disabled>Hold to Talk</button>
+          <button id="tapToTalk" disabled>Tap to Talk</button>
+        </div>
+      </section>
+
+      <section class="transcript">
+        <h3>Transcript</h3>
+        <div id="log"></div>
+      </section>
+    </main>
+
+    <footer><small>Gemini Live demo for Revolt Motors.</small></footer>
+  </div>
+
+  <script type="module" src="./worklet.js"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
