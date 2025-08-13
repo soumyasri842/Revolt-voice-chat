@@ -1,81 +1,62 @@
-# Revolt Motors Voice Chat (Gemini Live API)
+# Rev Voice — Gemini Live (Server-to-Server, Node/Express)
 
-## 🚀 Overview
-This project replicates the functionality of the Revolt Motors voice chatbot using the **Gemini Live API**. It enables real-time, multilingual, interruptible voice conversations through a clean web interface. The assistant is designed to respond only to queries related to Revolt Motors.
+A minimal replica of the Revolt Motors voice assistant using **Gemini Live API** with **server-to-server** architecture.
 
-## 🧠 Features
-- 🎙️ Real-time voice interaction
-- 🔄 Interruptible responses (user can speak over the AI)
-- ⚡ Low-latency replies (1–2 seconds)
-- 🌐 Multilingual support
-- 🧱 Server-to-server architecture using Node.js and Express
+## Features
+- Realtime audio dialog (push-to-talk + tap-to-talk)
+- **Interruptions** (`response.cancel`) while the bot is speaking
+- Low-latency streaming audio (RAW PCM 24kHz)
+- System prompt constrained to **Revolt Motors–only** topics
+- Server-side API key; client only talks to your Node server
 
-## 🛠️ Tech Stack
-- **Backend**: Node.js + Express
-- **Frontend**: HTML + JavaScript
-- **Voice API**: Gemini Live (`gemini-2.5-flash-preview-native-audio-dialog`)
-- **Architecture**: Server-to-server (not client-to-server)
+## Stack
+- Backend: Node.js + Express + ws (WebSocket proxy to Gemini Live)
+- Frontend: Vanilla HTML/CSS/JS + Web Audio API
 
-## 📦 Installation & Setup
+## Prereqs
+- Node.js 18+
+- Free API key from https://aistudio.google.com (AI Studio)
 
-### 1. Clone the Repository
-
+## Setup
 ```bash
-git clone https://github.com/YOUR_USERNAME/revolt-voice-chat.git
-cd revolt-voice-chat
-Here’s the complete and polished  file for your GitHub repository. It includes everything: project overview, setup instructions, usage, demo, and licensing.
+git clone <your-repo-url>
+cd revolt-gemini-live/server
+cp .env.example .env
+# edit .env: GOOGLE_API_KEY=..., optional VOICE/LANGUAGE_CODE
+npm install
+npm run start
+```
 
+In another terminal:
+```bash
+# serve the static client with any static server, or open index.html
+cd ../client
+# for quick serve you can use VS Code Live Server or:
+# npx http-server -p 5173 .
+```
 
-2. Install Dependencies
+Open the client at http://localhost:5173 and set **Server WS** to `ws://localhost:8080/live`, then **Connect**.
 
-3. Configure Environment Variables
-Create a  file in the root directory and add your Gemini API key:
+## Models
+- Default: `gemini-2.5-flash-preview-native-audio-dialog` (strict free-tier limits)
+- Dev options: `gemini-2.0-flash-live-001`, `gemini-live-2.5-flash-preview`
 
+You can switch models by editing `server/.env` (GEMINI_MODEL).
 
-4. Run the Server
+## Interruption
+Click **Interrupt** to send `{type:"response.cancel"}` to Gemini Live, cancelling current TTS and enabling immediate barge-in.
 
-5. Launch the App
-Open your browser and go to:
+## Languages
+Change **Lang** (e.g., `hi-IN`, `en-IN`, `te-IN`) and **Voice** then click **Connect** (or send a Session Update after).
 
+## System Instructions (prompt)
+```
+You are Rev, the official voice assistant for Revolt Motors. Only discuss Revolt products and services: RV400, RV400 BRZ, booking, pricing, finance, test rides, servicing, warranty, charging, specifications, dealership & service locations, and the MyRevolt app. If users ask about other brands or topics, politely refuse and bring the conversation back to Revolt. Speak concisely, be friendly, and support English, Hindi, and regional Indian languages when requested.
+```
 
-🎯 System Instructions Prompt
-The assistant is guided by the following system prompt:
+## Demo video
+- Record 30–60s: connect, ask a question, **interrupt**, ask in another language, show latency.
 
-
-🎥 Demo Video
-A short demo showcasing:
-• 	Natural voice conversation
-• 	Mid-response interruption handling
-• 	Fast response latency
-📺 Watch the demo on Google Drive
-
-📁 Project Structure
-revolt-voice-chat/
-├── server/
-│   ├── index.js
-│   ├── gemini.js
-│   └── .env
-├── public/
-│   ├── index.html
-│   └── script.js
-├── README.md
-
-
-
-📚 Resources
-- Gemini Live API Documentation
-- Gemini Interactive Playground
-- Revolt Motors Voice Assistant
-
-📝 License
-This project is licensed under the MIT License. Feel free to use, modify, and distribute with attribution.
-
-🙋‍♀️ Author
-Soumyasri Vaidugula
-Actively seeking roles in content moderation and customer satisfaction
-📍 Warangal, Telangana, India
-
-
-
-
-
+## Notes
+- Free tier has request/day limits; use a dev model for testing.
+- This is a starter; production needs auth, logging, retries, and better audio handling.
